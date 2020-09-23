@@ -19,8 +19,32 @@ import torch.nn as nn
 from monty.collections import AttrDict
 
 from torch_scae import cv_ops
-from torch_scae.nn_ext import Conv2dStack, multiple_attention_pooling_2d
+from torch_scae.nn_ext import Conv2dStack, multiple_attention_pooling_2d, BestStack
 from torch_scae.nn_utils import measure_shape
+
+
+class BestEncoder(nn.Module):
+    def __init__(self,
+                 input_shape,
+                 out_channels,
+                 kernel_sizes,
+                 strides,
+                 activation=nn.ReLU,
+                 activate_final=True,
+                 dropout = 0):
+        super().__init__()
+        self.network = BestStack(in_channels=input_shape[0],
+                                   out_channels=out_channels,
+                                   kernel_sizes=kernel_sizes,
+                                   strides=strides,
+                                   activation=activation,
+                                   activate_final=activate_final,
+                                   dropout = dropout)
+        self.output_shape = measure_shape(self.network, input_shape=input_shape)
+
+    def forward(self, image):
+        return self.network(image)
+
 
 
 class CNNEncoder(nn.Module):
@@ -47,7 +71,7 @@ class CNNEncoder(nn.Module):
 class CapsuleImageEncoder(nn.Module):
     def __init__(self,
                  input_shape: Tuple[int, int, int],
-                 encoder: CNNEncoder,
+                 encoder,
                  n_caps: int,
                  n_poses: int,
                  n_special_features: int = 0,

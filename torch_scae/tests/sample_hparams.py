@@ -7,7 +7,8 @@ model_params = dict(
         out_channels=[128] * 4,
         kernel_sizes=[3, 3, 3, 3],
         strides=[2, 2, 1, 1],
-        activate_final=True
+        activate_final=True,
+        dropout = 0.4
     ),
     pcae_encoder_params=dict(
         n_poses=6,
