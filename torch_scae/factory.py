@@ -154,7 +154,7 @@ def make_scae(model_params: dict):
 
     #cnn_encoder = CNNEncoder(**config.pcae_cnn_encoder)
     #best_encoder = BestEncoder(**config.pcae_cnn_encoder)
-    gan_encoder = GANEncoder(**config.pcae_cnn_encoder)
+    gan_encoder = BestEncoder(**config.pcae_cnn_encoder)
     part_encoder = CapsuleImageEncoder(
         encoder=gan_encoder,
         **config.pcae_encoder
