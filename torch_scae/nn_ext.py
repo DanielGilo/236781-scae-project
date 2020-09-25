@@ -16,6 +16,35 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 
+def GANStack(in_channels,
+                out_channels,
+                kernel_sizes,
+                strides,
+                activation=nn.LeakyReLU(negative_slope=0.01)):
+    assert len(out_channels) == len(kernel_sizes) == len(strides)
+
+    channels = [in_channels] + list(out_channels)
+    layers = []
+    for i in range(len(channels) - 1):
+        in_channels = channels[i]
+        out_channels = channels[i + 1]
+        kernel_size = kernel_sizes[i]
+        stride = strides[i]
+        conv = nn.Conv2d(in_channels=in_channels,
+                         out_channels=out_channels,
+                         kernel_size=kernel_size,
+                         stride=stride)
+        layers.append(conv)
+        layers.append(nn.BatchNorm2d(out_channels))
+        layers.append(activation())
+
+    layers.pop()
+    layers.pop()
+
+    return nn.Sequential(*layers)
+
+
+
 def BestStack(in_channels,
                 out_channels,
                 kernel_sizes,

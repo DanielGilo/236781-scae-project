@@ -10,6 +10,11 @@ model_params = dict(
         activate_final=True,
         dropout = 0.7
     ),
+    pcae_gan_encoder_params=dict(
+        out_channels=[32, 64, 128, 256, 512, 1024],
+        kernel_sizes=[5, 5, 5, 5, 5, 5],
+        strides=[2, 2, 2, 2, 2, 2],
+    ),
     pcae_encoder_params=dict(
         n_poses=6,
         n_special_features=16,

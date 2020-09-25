@@ -2,7 +2,7 @@ from argparse import Namespace
 
 from torch_scae.object_decoder import CapsuleLayer, CapsuleObjectDecoder
 from torch_scae.part_decoder import TemplateGenerator, TemplateBasedImageDecoder
-from torch_scae.part_encoder import CNNEncoder, CapsuleImageEncoder, BestEncoder
+from torch_scae.part_encoder import CNNEncoder, CapsuleImageEncoder, BestEncoder, GANEncoder
 from torch_scae.set_transformer import SetTransformer
 from torch_scae.stacked_capsule_auto_encoder import SCAE
 
@@ -153,9 +153,10 @@ def make_scae(model_params: dict):
     config = Namespace(**prepare_model_params(**model_params))
 
     #cnn_encoder = CNNEncoder(**config.pcae_cnn_encoder)
-    best_encoder = BestEncoder(**config.pcae_cnn_encoder)
+    #best_encoder = BestEncoder(**config.pcae_cnn_encoder)
+    gan_encoder = GANEncoder(**config.pcae_gan_encoder)
     part_encoder = CapsuleImageEncoder(
-        encoder=best_encoder,
+        encoder=gan_encoder,
         **config.pcae_encoder
     )
 

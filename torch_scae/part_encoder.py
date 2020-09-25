@@ -19,8 +19,27 @@ import torch.nn as nn
 from monty.collections import AttrDict
 
 from torch_scae import cv_ops
-from torch_scae.nn_ext import Conv2dStack, multiple_attention_pooling_2d, BestStack
+from torch_scae.nn_ext import Conv2dStack, multiple_attention_pooling_2d, BestStack, GANStack
 from torch_scae.nn_utils import measure_shape
+
+
+class GANEncoder(nn.Module):
+    def __init__(self,
+                 input_shape,
+                 out_channels,
+                 kernel_sizes,
+                 strides,
+                 activation=nn.LeakyReLU(negative_slope=0.01)):
+        super().__init__()
+        self.network = GANStack(in_channels=input_shape[0],
+                                   out_channels=out_channels,
+                                   kernel_sizes=kernel_sizes,
+                                   strides=strides,
+                                   activation=activation)
+        self.output_shape = measure_shape(self.network, input_shape=input_shape)
+
+    def forward(self, image):
+        return self.network(image)
 
 
 class BestEncoder(nn.Module):
