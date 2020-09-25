@@ -8,6 +8,7 @@ model_params = dict(
         kernel_sizes=[5, 5, 5, 5, 5, 5],
         strides=[2, 2, 2, 2, 2, 2],
         activate_final=True,
+        dropout=0
     ),
     pcae_encoder_params=dict(
         n_poses=6,

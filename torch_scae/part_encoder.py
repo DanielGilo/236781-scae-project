@@ -52,17 +52,18 @@ class BestEncoder(nn.Module):
                  out_channels,
                  kernel_sizes,
                  strides,
-                 activation=nn.ReLU,
+                 activation=nn.LeakyReLU(negative_slope=0.01),
                  activate_final=True,
                  dropout = 0):
         super().__init__()
-        self.network = BestStack(in_channels=input_shape[0],
-                                   out_channels=out_channels,
-                                   kernel_sizes=kernel_sizes,
-                                   strides=strides,
-                                   activation=activation,
-                                   activate_final=activate_final,
-                                   dropout = dropout)
+        out_channels = [32, 64, 128, 256, 512, 1024]
+        kernel_sizes = [5, 5, 5, 5, 5, 5]
+        strides = [2, 2, 2, 2, 2, 2]
+        self.network = GANStack(in_channels=input_shape[0],
+                                out_channels=out_channels,
+                                kernel_sizes=kernel_sizes,
+                                strides=strides,
+                                activation=activation)
         self.output_shape = measure_shape(self.network, input_shape=input_shape)
 
     def forward(self, image):
