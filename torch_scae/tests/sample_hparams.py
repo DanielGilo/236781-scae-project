@@ -4,11 +4,11 @@ model_params = dict(
     n_part_caps=40,
     n_obj_caps=32,
     pcae_cnn_encoder_params=dict(
-        out_channels=[32, 64, 128, 256, 512, 1024],
-        kernel_sizes=[5, 5, 5, 5, 5, 5],
-        strides=[2, 2, 2, 2, 2, 2],
+        out_channels=[128] * 4,
+        kernel_sizes=[3, 3, 3, 3],
+        strides=[2, 2, 1, 1],
         activate_final=True,
-        dropout=0
+        dropout = 0.1
     ),
     pcae_encoder_params=dict(
         n_poses=6,
