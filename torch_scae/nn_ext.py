@@ -25,8 +25,13 @@ def BestStack(in_channels,
                 dropout = 0):
     assert len(out_channels) == len(kernel_sizes) == len(strides)
 
+
+    activation = nn.LeakyReLU(negative_slope=0.01)
+    out_channels = [32, 64, 128, 256, 512, 1024]
     channels = [in_channels] + list(out_channels)
     layers = []
+    kernel_sizes = [5, 5, 5, 5, 5, 5]
+    strides = [2, 2, 2, 2, 2, 2]
     for i in range(len(channels) - 1):
         in_channels = channels[i]
         out_channels = channels[i + 1]
@@ -37,8 +42,9 @@ def BestStack(in_channels,
                          kernel_size=kernel_size,
                          stride=stride)
         layers.append(conv)
+        layers.append(nn.BatchNorm2d(out_channels))
         layers.append(activation())
-        layers.append(nn.dropout(p=dropout))
+        #layers.append(nn.dropout(p=dropout))
 
     if not activate_final:
         layers.pop()
