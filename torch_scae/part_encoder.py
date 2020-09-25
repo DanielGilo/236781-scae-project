@@ -29,7 +29,8 @@ class GANEncoder(nn.Module):
                  out_channels,
                  kernel_sizes,
                  strides,
-                 activation=nn.LeakyReLU(negative_slope=0.01)):
+                 activation=nn.LeakyReLU(negative_slope=0.01),
+                 activate_final = True):
         super().__init__()
         out_channels = [32, 64, 128, 256, 512, 1024]
         kernel_sizes = [5, 5, 5, 5, 5, 5]
