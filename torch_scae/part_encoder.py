@@ -31,6 +31,9 @@ class GANEncoder(nn.Module):
                  strides,
                  activation=nn.LeakyReLU(negative_slope=0.01)):
         super().__init__()
+        out_channels = [32, 64, 128, 256, 512, 1024]
+        kernel_sizes = [5, 5, 5, 5, 5, 5]
+        strides = [2, 2, 2, 2, 2, 2]
         self.network = GANStack(in_channels=input_shape[0],
                                    out_channels=out_channels,
                                    kernel_sizes=kernel_sizes,

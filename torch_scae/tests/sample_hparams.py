@@ -6,14 +6,7 @@ model_params = dict(
     pcae_cnn_encoder_params=dict(
         out_channels=[128] * 4,
         kernel_sizes=[3, 3, 3, 3],
-        strides=[2, 2, 1, 1],
-        activate_final=True,
-        dropout = 0.7
-    ),
-    pcae_gan_encoder_params=dict(
-        out_channels=[32, 64, 128, 256, 512, 1024],
-        kernel_sizes=[5, 5, 5, 5, 5, 5],
-        strides=[2, 2, 2, 2, 2, 2],
+        strides=[2, 2, 1, 1]
     ),
     pcae_encoder_params=dict(
         n_poses=6,

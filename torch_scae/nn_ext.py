@@ -40,6 +40,7 @@ def GANStack(in_channels,
 
     layers.pop()
     layers.pop()
+    layers.append(activation())
 
     return nn.Sequential(*layers)
 
