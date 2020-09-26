@@ -29,9 +29,10 @@ class BestEncoder(nn.Module):
                  out_channels,
                  kernel_sizes,
                  strides,
+                 dropout,
+                 use_batch_norm,
                  activation=nn.ReLU,
-                 activate_final=True,
-                 dropout = 0):
+                 activate_final=True):
         super().__init__()
         self.network = BestStack(in_channels=input_shape[0],
                                    out_channels=out_channels,
@@ -39,6 +40,7 @@ class BestEncoder(nn.Module):
                                    strides=strides,
                                    activation=activation,
                                    activate_final=activate_final,
+                                   use_batch_norm=use_batch_norm,
                                    dropout = dropout)
         self.output_shape = measure_shape(self.network, input_shape=input_shape)
 

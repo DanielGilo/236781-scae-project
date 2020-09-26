@@ -23,6 +23,8 @@ model:
     kernel_sizes: [3,3,3,3]
     out_channels: [128, 128, 128, 128]
     strides: [2,2,1,1]
+    dropout: 0.4
+    use_batch_norm: false
   pcae_decoder_params:
     background_value: true
     learn_output_scale: false

@@ -20,18 +20,14 @@ def BestStack(in_channels,
                 out_channels,
                 kernel_sizes,
                 strides,
+                dropout,
+                use_batch_norm,
                 activation=nn.ReLU,
-                activate_final=True,
-                dropout = 0):
+                activate_final=True):
     assert len(out_channels) == len(kernel_sizes) == len(strides)
 
-
-    activation = nn.LeakyReLU(negative_slope=0.01)
-    out_channels = [32, 64, 128, 256, 512, 1024]
     channels = [in_channels] + list(out_channels)
     layers = []
-    kernel_sizes = [5, 5, 5, 5, 5, 5]
-    strides = [2, 2, 2, 2, 2, 2]
     for i in range(len(channels) - 1):
         in_channels = channels[i]
         out_channels = channels[i + 1]
@@ -42,14 +38,18 @@ def BestStack(in_channels,
                          kernel_size=kernel_size,
                          stride=stride)
         layers.append(conv)
-        layers.append(nn.BatchNorm2d(out_channels))
         layers.append(activation())
-        #layers.append(nn.dropout(p=dropout))
+        layers.append(nn.Dropout(p=dropout))
+        if(use_batch_norm):
+            layers.append(nn.BatchNorm2d(out_channels))
 
     if not activate_final:
         layers.pop()
 
     return nn.Sequential(*layers)
+
+
+
 
 
 def MLP(sizes, activation=nn.ReLU, activate_final=True, bias=True):
