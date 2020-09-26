@@ -40,7 +40,7 @@ def BestStack(in_channels,
         layers.append(conv)
         layers.append(activation())
         layers.append(nn.Dropout(p=dropout))
-        if(use_batch_norm):
+        if use_batch_norm:
             layers.append(nn.BatchNorm2d(out_channels))
 
     if not activate_final:
