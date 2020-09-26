@@ -39,7 +39,7 @@ model:
   scae_params:
     caps_ll_weight: 1.0
     cpr_dynamic_reg_weight: 10
-    posterior_between_example_sparsity_weight: 0.2
+    posterior_between_example_sparsity_weight: 0.1
     posterior_sparsity_loss_type: entropy
     posterior_within_example_sparsity_weight: 0.7
     presence_type: enc
